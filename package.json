@@ -1,0 +1,27 @@
+{
+  "name": "resistance-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r ts-node/register index.ts"
+  },
+  "author": "Ong Bee Lee",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "moment": "^2.25.3",
+    "typedi": "^0.8.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/moment": "^2.13.0",
+    "@types/node": "^13.13.5",
+    "@types/winston": "^2.4.4",
+    "ts-node": "^8.10.1",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.8.3"
+  }
+}
