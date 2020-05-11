@@ -2,22 +2,28 @@ import discord, { Client } from 'discord.js';
 import { Container } from 'typedi';
 import { BotServiceKey } from '../utils/constants';
 import { getLogger } from '../utils/logger';
+import { getParser } from './commands/index';
+import { getConfiguration } from '../utils/configuration';
 
 function createBot() {
     const logger = getLogger();
+    const handler = getParser();
+    const config = getConfiguration();
+
     const bot = new discord.Client();
     bot.once('ready', () => {
         logger.info('Bot is ready');
     })
-    .on('presenceUpdate', (pold, pnew) => {
-        logger.debug('presenceUpdate event');
-    })
-    .on('guildMemberUpdate', (...args) => {
-        logger.debug('guildMemberUpdate');
-    })
     .on('message', args => {
-        logger.debug('message');
-        args.channel.send(args.channel.id); 
+        if (!args.content.startsWith(config.prefix))
+            return; // ignore
+
+        try {
+            handler.parse(args);
+        }
+        catch (err) {
+            logger.error(err);
+        }
     }) 
     .on('error', (err) => {
         logger.error(err);
