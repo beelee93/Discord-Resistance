@@ -8,3 +8,7 @@ export function isGameChannel(msg: Message) {
 export function isTextChannel(msg: Message) {
     return msg.channel.type === 'text';
 }
+
+export function isDMChannel(msg: Message) {
+    return msg.channel.type === 'dm';
+}

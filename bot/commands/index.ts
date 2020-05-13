@@ -7,7 +7,7 @@ import { getLogger } from '../../utils/logger';
 import { Logger } from "winston";
 import { getConfiguration, Configuration } from '../../utils/configuration';
 import Resistance from '../../game/resistance/index';
-import { isGameChannel } from '../../utils/helper';
+import { isGameChannel, isTextChannel, isDMChannel } from '../../utils/helper';
 
 class CommandParser {
     private logger: Logger;
@@ -56,6 +56,16 @@ class CommandParser {
             curArg.value = mentionedUser;
         }
 
+        // if a game is running, we route it into its command handler
+        if (this.config.currentGame) {
+            let gameHandler = this.config.currentGame.getHandler(packet);
+            if (gameHandler) {
+                this.logger.debug(`Calling game handler ${gameHandler.name} for operator ${packet.operator}`);
+                gameHandler(packet);
+                return;
+            }
+        }
+
         // now we attempt to pass it into the appropriate handler method
         let handlerMethod = this.handler[packet.operator];
         if (handlerMethod) {
@@ -64,6 +74,7 @@ class CommandParser {
         }
         else {
             this.logger.warn(`No handler for operator ${packet.operator}`);
+            packet.rawMessage.reply(`**D O N K E Y**`);
         }
     }
 

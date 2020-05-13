@@ -1,6 +1,6 @@
-import { CommandHandler } from '../bot/commands/types';
+import { HandlerFunction, CommandPacket } from '../bot/commands/types';
 
 export interface Game {
-    commandHandler: CommandHandler;
     name: string;
+    getHandler(packet: CommandPacket) : HandlerFunction;
 }

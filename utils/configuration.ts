@@ -3,7 +3,7 @@ import { ConfigurationServiceKey } from './constants';
 import { Game } from '../game/index';
 
 export class Configuration {
-    prefix: string = "-res";
+    prefix: string = "r";
     currentGame: Game = null;
     currentGameChannel: string = null;
 
